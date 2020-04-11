@@ -2,17 +2,18 @@ const secret = require('./secret');
 
 module.exports = {
   "development": {
-    "username": "postgres",
+    "username": secret.DATABASE_USERNAME,
     "password": secret.DATABASE_PASSWORD,
-    "database": "teste2Pin",
-    "host": "127.0.0.1",
+    "database": secret.DATABASE_NAME,
+    "host": secret.DATABASE_HOST,
+    "port":secret.DATABASE_PORT,
     "dialect": "postgres",
 
   },
   "test": {
     "username": "postgres",
     "password": secret.DATABASE_PASSWORD,
-    "database": "teste2Pin",
+    "database": "projetoPin",
     "host": "127.0.0.1",
     "dialect": "postgres",
 
@@ -20,7 +21,7 @@ module.exports = {
   "production": {
     "username": "postgres",
     "password": secret.DATABASE_PASSWORD,
-    "database": "teste2Pin",
+    "database": "projetoPin",
     "host": "127.0.0.1",
     "dialect": "postgres",
   }
