@@ -1,6 +1,6 @@
 //o express faz a conexão do frontend com o backend através das rotas
 const express = require('express')
-const getRoutes = require('./routes/getRoutes')
+const routes = require('./routes')
 
 //faz a requisição do postgre
 //const {Client} = require('pg')
@@ -14,7 +14,7 @@ app.use(express.json())
 //app.use(routes)
 app.use(express.urlencoded({extended:false}))
 //porta do projeto
-app.get('/',getRoutes.home)
+app.get('/',routes.home)
 
   app.listen(8000)
 
