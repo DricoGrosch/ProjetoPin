@@ -1,26 +1,33 @@
 import React, { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import styles from "./styles";
-import Logo from '../../img/logo.png'
+import Logo from "../../img/logo.png";
+import LoginController from "./LoginController";
+import { useHistory } from "react-router-dom";
 
 function Login() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const routerHistory = useHistory();
+  function validateForm() {
+    if (currentUser.username && currentUser.password) {
+      LoginController.handleAuth(
+        currentUser,
+       ()=>{ routerHistory.push("/proximaTela")}
+      );
+    }
+  }
+
   return (
     <>
       <div style={styles.outsideContainer}>
-        <div
-          style={styles.container}
-        >
-          <img 
-          src={Logo}
-          alt='Logo'
-          style={{height:'40%', margin:'1%'}}/>
+        <div style={styles.container}>
+          <img src={Logo} alt="Logo" style={{ height: "40%", margin: "1%" }} />
           <form>
             <div style={{ padding: "0 5% 5% 5%" }}>
               <TextField
                 id="username"
                 label="Username"
-                required="true"
+                required
                 onChange={(event) => {
                   setCurrentUser({
                     ...currentUser,
@@ -30,7 +37,7 @@ function Login() {
                 style={{ width: "100%" }}
               />
               <TextField
-                required="true"
+                required
                 type="password"
                 id="password"
                 label="Password"
@@ -45,10 +52,12 @@ function Login() {
             </div>
             <div style={{ width: "100%" }}>
               <Button
+                type="submit"
+                onClick={() => validateForm()}
                 style={{
                   backgroundColor: "#005ca5",
-                  width:'90%',
-                  color:'whitesmoke'
+                  width: "90%",
+                  color: "whitesmoke",
                 }}
               >
                 Sign in

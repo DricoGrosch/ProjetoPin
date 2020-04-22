@@ -9,7 +9,7 @@ function Routes() {
           <Route exact path="/">
             <Redirect to="/login" /> }
           </Route>
-          <Route path={"/login"} exact={true} component={() => <Login />} />
+          <Route path={"/login"} exact component={() => <Login />} />
         </Switch>
       </BrowserRouter>
     </>
