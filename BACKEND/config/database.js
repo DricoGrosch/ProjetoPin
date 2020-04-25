@@ -2,12 +2,15 @@ const secret = require('./secret');
 
 module.exports = {
   "development": {
-    "username": secret.DATABASE_USERNAME,
+    "username": "postgres",
     "password": secret.DATABASE_PASSWORD,
     "database": secret.DATABASE_NAME,
     "host": secret.DATABASE_HOST,
     "port":secret.DATABASE_PORT,
     "dialect": "postgres",
+    "define":{
+      "freezeTableName": true
+    }
 
   },
   "test": {

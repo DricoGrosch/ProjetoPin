@@ -1,14 +1,24 @@
-const Person = require('./Person')
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    id: DataTypes.INTEGER,
-    userName: DataTypes.STRING,
-    password: DataTypes.STRING,
-    status: DataTypes.STRING,
+const { Model, DataTypes } = require("sequelize");
+const Person = require("../models/Person");
 
-  }, {});
-  User.associate = models => {
-    User.hasOne(models.Person)
+class User extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        username: DataTypes.STRING,
+        password: DataTypes.STRING,
+        status: DataTypes.STRING,
+        personId: { 
+          type: DataTypes.INTEGER, 
+          references: {
+             model: "Person",key:'id' } },
+      },
+      { sequelize }
+    );
   }
-  return User;
-};
+  static associate({ Person }) {
+    this.hasOne(Person);
+    console.log(this.associations);
+  }
+}
+module.exports = User;

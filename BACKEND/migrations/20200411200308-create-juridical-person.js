@@ -44,6 +44,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropColumn("JuridicalPerson");
+    return queryInterface.dropTable("JuridicalPerson");
   },
 };
