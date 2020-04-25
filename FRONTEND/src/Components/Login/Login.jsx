@@ -27,6 +27,7 @@ function Login() {
               <TextField
                 id="username"
                 label="Username"
+                
                 required
                 onChange={(event) => {
                   setCurrentUser({
@@ -47,20 +48,41 @@ function Login() {
                     password: event.target.value,
                   });
                 }}
+               
                 style={{ width: "100%" }}
               />
+               <a 
+               href="url"
+               style={{
+                display: "flex",
+                
+               }} 
+                >
+                 Can't sign in?
+                 
+                 </a>
             </div>
+           
             <div style={{ width: "100%" }}>
               <Button
-                type="submit"
+                type="submit" 
                 onClick={() => validateForm()}
                 style={{
                   backgroundColor: "#005ca5",
                   width: "90%",
                   color: "whitesmoke",
+                  
                 }}
+                style={styles.buttonLogin}
               >
                 Sign in
+              </Button>
+              <Button
+                type="submit"
+                onClick={() => validateForm()}
+                style={styles.buttonCreate}
+              >
+                Create account
               </Button>
             </div>
           </form>

@@ -18,7 +18,7 @@ class User extends Model {
   }
   static associate({ Person }) {
     this.hasOne(Person);
-    console.log(this.associations);
+   
   }
 }
 module.exports = User;

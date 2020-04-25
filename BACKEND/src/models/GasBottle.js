@@ -1,15 +1,13 @@
+ const {Model,DataTypes} = require ('sequelize')
 
-"use_strict";
-module.exports = (Sequelize, DataTypes) => {
-  const GasBottle = Sequelize.define(
-    "GasBottle",
-    {   
+class GasBottle extends Model{
+  static init(sequelize){
+    super.init({
       id: DataTypes.INTEGER,
       type: DataTypes.INTEGER,
       costPrice: DataTypes.DOUBLE,
       sellPrice: DataTypes.DOUBLE
-    },
-    {}
-  );
-  return GasBottle;
-};
+    },{sequelize})
+  }
+}
+module.exports = GasBottle

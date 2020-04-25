@@ -1,8 +1,9 @@
-"use_strict";
-module.exports = (Sequelize, DataTypes) => {
-  const Deliverer = Sequelize.define(
-    "Deliverer",
-    {
+const {Model,DataTypes} = require ('sequelize')
+
+
+class Deliverer extends Model{
+  static init(sequelize){
+    super.init({
       id: DataTypes.INTEGER,
       name: DataTypes.STRING,
       address: DataTypes.STRING,
@@ -10,8 +11,7 @@ module.exports = (Sequelize, DataTypes) => {
       longitude: DataTypes.STRING,
       drivers_license: DataTypes.STRING,
       contract: DataTypes.STRING
-    },
-    {}
-  );
-  return Deliverer;
-};
+    },{sequelize})
+  }
+}
+module.exports= Deliverer
