@@ -6,14 +6,16 @@ import LoginController from "./LoginController";
 import { useHistory } from "react-router-dom";
 
 function Login() {
+
   const [currentUser, setCurrentUser] = useState({});
   const routerHistory = useHistory();
-  function validateForm() {
+
+  function validateForm(e) {
     if (currentUser.username && currentUser.password) {
-      LoginController.handleAuth(
-        currentUser,
-       ()=>{ routerHistory.push("/proximaTela")}
-      );
+      e.preventDefault()
+      LoginController.handleAuth(currentUser, () => {
+        routerHistory.push("/home");
+      });
     }
   }
 
@@ -27,7 +29,6 @@ function Login() {
               <TextField
                 id="username"
                 label="Username"
-                
                 required
                 onChange={(event) => {
                   setCurrentUser({
@@ -48,30 +49,18 @@ function Login() {
                     password: event.target.value,
                   });
                 }}
-               
                 style={{ width: "100%" }}
               />
-               <a 
-               href="url"
-               style={{
-                display: "flex",
-                
-               }} 
-                >
-                 Can't sign in?
-                 
-                 </a>
             </div>
-           
+
             <div style={{ width: "100%" }}>
               <Button
-                type="submit" 
-                onClick={() => validateForm()}
+                type="submit"
+                onClick={(e) => validateForm(e)}
                 style={{
                   backgroundColor: "#005ca5",
                   width: "90%",
                   color: "whitesmoke",
-                  
                 }}
                 style={styles.buttonLogin}
               >

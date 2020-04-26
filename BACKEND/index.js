@@ -20,3 +20,8 @@ initDatabse();
 app.use(routes);
 
 app.listen(8000);
+
+
+
+console.log('ta rodando mano');
+

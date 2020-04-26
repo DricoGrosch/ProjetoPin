@@ -2,8 +2,6 @@ const { Model, DataTypes } = require("sequelize");
 
 class Person extends Model {
   static init(sequelize) {
-    console.log({ sequelize });
-
     super.init(
       {
         name: DataTypes.STRING,
