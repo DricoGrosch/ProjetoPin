@@ -1,19 +1,27 @@
-"use_strict";
-module.exports = (Sequelize, DataTypes) => {
-  const JuridicalPerson = Sequelize.define(
-    "JuridicalPerson",
-    {
+
+const { Model, DataTypes } = require("sequelize");
+
+
+
+class JuridicalPerson extends Model{
+  static init(sequelize){
+    super.init({
       id: DataTypes.INTEGER,
       name: DataTypes.STRING,
       address: DataTypes.STRING,
       latitude: DataTypes.STRING,
       longitude: DataTypes.STRING,
       cnpj: DataTypes.STRING,
-    },
-    {}
-  );
-  JuridicalPerson.associate = (models) => {
-    JuridicalPerson.hasOne(models.Covenant);
-  };
-  return JuridicalPerson;
-};
+      covenantId: { 
+        type: DataTypes.INTEGER, 
+        references: {
+           model: "Covenant",key:'id' } },
+
+    },{sequelize})
+  }
+  static associate({ Covenant }) {
+    this.hasOne(Covenant);
+    
+  }
+}
+module.exports = JuridicalPerson

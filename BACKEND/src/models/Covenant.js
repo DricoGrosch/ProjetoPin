@@ -1,10 +1,17 @@
-'use strict';
+"use strict";
 
-module.exports = (sequelize, DataTypes) => {
-    const Person = sequelize.define('Person', {
+import { Model, DataTypes } from "sequelize/types";
+
+class Covenant extends Model {
+  static init(sequelize) {
+    super.init(
+      {
         id: DataTypes.INTEGER,
-        discount_amaunt: DataTypes.DOUBLE
-    }, {});
+        discount_amaunt: DataTypes.DOUBLE,
+      },
+      { sequelize }
+    );
+  }
+}
 
-    return Person;
-};
+module.exports = Covenant;

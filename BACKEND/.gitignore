@@ -1,4 +1,7 @@
 config/secret.js
-node_modules
+/node_modules
 yarn-error.log
 .vscode/settings.json
+node_modules
+./node_modules
+
