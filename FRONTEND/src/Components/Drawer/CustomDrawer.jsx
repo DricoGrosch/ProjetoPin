@@ -9,6 +9,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PeopleIcon from '@material-ui/icons/People';
+import DonutSmallIcon from '@material-ui/icons/DonutSmall';
+import styles from './styles'
+
+
 
 function CustomDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,11 +36,26 @@ function CustomDrawer() {
         onClose={()=>{DrawerController.toggleDrawer(isOpen, setIsOpen)}}
       >
         <List>
+          <ListItem style={styles.ListItem} >
+            <ListItemIcon style={styles.ListItemIcon} >
+
+              <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary={"ORDERS"} />
+          </ListItem>
+
           <ListItem>
             <ListItemIcon>
-              <InboxIcon />
+              <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary={"Teste"} />
+            <ListItemText primary={"CUSTUMER MASTER"} />
+          </ListItem>
+
+          <ListItem>
+            <ListItemIcon>
+              <DonutSmallIcon />
+            </ListItemIcon>
+            <ListItemText primary={"OTHERS"} />
           </ListItem>
         </List>
         <Divider />

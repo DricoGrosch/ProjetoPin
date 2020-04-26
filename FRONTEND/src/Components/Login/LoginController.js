@@ -14,15 +14,18 @@ async function handleAuth({ username, password }, navigateCallback) {
   try {
     const response = await fetch("/get/user", init);
     if (response.status != 200) {
-      alert("nao tem usuario man");
+      alert("User not found");
     } else {
-      const user = await response.json();
-      localStorage.setItem("authUser", user);
+      const data = await response.json();
+      const user = JSON.parse(data)
+      user.isAuthenticated = true
+      localStorage.setItem("authUser", JSON.stringify(user));
+      navigateCallback();
     }
   } catch (e) {
     console.log(e);
   }
-  // navigateCallback();
+   
 }
 
 export default {

@@ -6,15 +6,17 @@ import LoginController from "./LoginController";
 import { useHistory } from "react-router-dom";
 
 function Login() {
-
   const [currentUser, setCurrentUser] = useState({});
   const routerHistory = useHistory();
 
   function validateForm(e) {
     if (currentUser.username && currentUser.password) {
-      e.preventDefault()
+      e.preventDefault();
       LoginController.handleAuth(currentUser, () => {
-        routerHistory.push("/home");
+        routerHistory.push({
+          pathname: "/home",
+          state: { isAuthenticated: true },
+        });
       });
     }
   }
