@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Login from "../Login/Login";
+import BaseLayout from "../BaseLayout/BaseLayout";
+
 function Routes() {
   return (
     <>
@@ -10,6 +12,7 @@ function Routes() {
             <Redirect to="/login" /> }
           </Route>
           <Route path={"/login"} exact component={() => <Login />} />
+          <Route path={"/home"} exact component={() => <BaseLayout />} />
         </Switch>
       </BrowserRouter>
     </>
