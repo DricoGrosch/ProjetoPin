@@ -24,6 +24,14 @@ function Routes() {
               <BaseLayout componentToRender={"Map"} {...props} />
             )}
           />
+          
+          <Route
+            path={"/registration/clients"}
+            exact
+            component={(props) => (
+              <BaseLayout componentToRender={"ClientRegistration"} {...props} />
+            )}
+          />
         </Switch>
       </BrowserRouter>
     </>

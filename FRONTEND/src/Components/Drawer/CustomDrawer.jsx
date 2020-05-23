@@ -11,15 +11,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import MapIcon from "@material-ui/icons/Map";
-import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import RecordVoiceOverIcon from "@material-ui/icons/RecordVoiceOver";
 import DonutSmallIcon from "@material-ui/icons/DonutSmall";
 import ExpandLess from "@material-ui/icons/ExpandLess";
-import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
+import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import EditIcon from "@material-ui/icons/Edit";
-import TramIcon from '@material-ui/icons/Tram';
+import TramIcon from "@material-ui/icons/Tram";
 import styles from "./styles";
-import PersonIcon from '@material-ui/icons/Person';
+import PersonIcon from "@material-ui/icons/Person";
 import { useHistory } from "react-router-dom";
 import { Collapse } from "@material-ui/core";
 
@@ -53,6 +53,20 @@ function CustomDrawer() {
             button
             onClick={() => {
               routerHistory.push({
+                pathname: "/home",
+                state: { isAuthenticated: true },
+              });
+            }}
+          >
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary={"HOME"} />
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              routerHistory.push({
                 pathname: "/map",
                 state: { isAuthenticated: true },
               });
@@ -69,13 +83,6 @@ function CustomDrawer() {
               <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary={"ORDERS"} />
-          </ListItem>
-
-          <ListItem button>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary={"CUSTUMER MASTER"} />
           </ListItem>
 
           <ListItem button>
@@ -105,7 +112,7 @@ function CustomDrawer() {
             <List component="div" disablePadding>
               <ListItem button>
                 <ListItemIcon>
-                  <DirectionsBikeIcon/>
+                  <DirectionsBikeIcon />
                 </ListItemIcon>
                 <ListItemText primary={"EMPLOYEES"} />
               </ListItem>
@@ -116,7 +123,15 @@ function CustomDrawer() {
                 </ListItemIcon>
                 <ListItemText primary={"USERS"} />
               </ListItem>
-              <ListItem button>
+              <ListItem
+                button
+                onClick={() => {
+                  routerHistory.push({
+                    pathname: "/registration/clients",
+                    state: { isAuthenticated: true },
+                  });
+                }}
+              >
                 <ListItemIcon>
                   <RecordVoiceOverIcon />
                 </ListItemIcon>
