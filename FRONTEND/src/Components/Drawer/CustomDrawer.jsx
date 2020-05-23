@@ -53,20 +53,6 @@ function CustomDrawer() {
             button
             onClick={() => {
               routerHistory.push({
-                pathname: "/home",
-                state: { isAuthenticated: true },
-              });
-            }}
-          >
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary={"HOME"} />
-          </ListItem>
-          <ListItem
-            button
-            onClick={() => {
-              routerHistory.push({
                 pathname: "/map",
                 state: { isAuthenticated: true },
               });
@@ -75,7 +61,7 @@ function CustomDrawer() {
             <ListItemIcon>
               <MapIcon />
             </ListItemIcon>
-            <ListItemText primary={"MAP"} />
+            <ListItemText primary={"HOME"} />
           </ListItem>
 
           <ListItem button style={styles.ListItem}>

@@ -6,13 +6,18 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Select,
+  IconButton,
 } from "@material-ui/core";
 import styles from "./styles";
 import globalStyles from "../styles";
 import ClientRegistrationController from "./ClientRegistrationController";
-
+import Map from "../Map";
+import config from "../../config";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 function ClientRegistration() {
-  const [formClient, setformClient] = useState({ physical: true });
+  const [formClient, setFormClient] = useState({ physical: true });
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -23,6 +28,7 @@ function ClientRegistration() {
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div style={styles.formContainer}>
         <form>
+          <input type="hidden" name="pk" value={formClient.id}></input>
           <RadioGroup
             row
             aria-label="position"
@@ -32,7 +38,7 @@ function ClientRegistration() {
           >
             <FormControlLabel
               onClick={() => {
-                setformClient({
+                setFormClient({
                   ...formClient,
                   physical: true,
                   juridical: false,
@@ -42,10 +48,11 @@ function ClientRegistration() {
               control={<Radio color="primary" />}
               label="PHYSICAL"
               labelPlacement="start"
+              checked={formClient.physical}
             />
             <FormControlLabel
               onClick={() => {
-                setformClient({
+                setFormClient({
                   ...formClient,
                   physical: false,
                   juridical: true,
@@ -55,71 +62,172 @@ function ClientRegistration() {
               control={<Radio color="primary" />}
               label="JURIDICAL"
               labelPlacement="start"
+              checked={formClient.juridical}
             />
           </RadioGroup>
           <TextField
             id="address"
             label="Address"
             required
+            InputLabelProps={{
+              shrink: true,
+            }}
             onChange={(event) => {
-              setformClient({
+              setFormClient({
                 ...formClient,
-                name: event.target.value,
+                address: event.target.value,
               });
             }}
             style={{ width: "100%" }}
+            value={formClient.address}
           />
           <TextField
             id="name"
             label="Name"
             required
+            InputLabelProps={{
+              shrink: true,
+            }}
+            onChange={(event) => {
+              setFormClient({
+                ...formClient,
+                name: event.target.value,
+              });
+            }}
             style={{ width: "100%" }}
+            value={formClient.name}
           />
           <TextField
             id="cpf"
             label="CPF"
+            InputLabelProps={{
+              shrink: true,
+            }}
             style={
               formClient.juridical
                 ? { width: "100%", display: "none" }
                 : { width: "100%" }
             }
+            required={formClient.physical ? true : false}
             onChange={(event) => {
-              setformClient({
+              setFormClient({
                 ...formClient,
                 cpf: event.target.value,
               });
             }}
+            value={formClient.cpf}
           />
           <TextField
             id="cnpj"
             label="CNPJ"
+            InputLabelProps={{
+              shrink: true,
+            }}
             style={
               formClient.physical
                 ? { width: "100%", display: "none" }
                 : { width: "100%" }
             }
+            required={formClient.physical ? false : true}
             onChange={(event) => {
-              setformClient({
+              setFormClient({
                 ...formClient,
                 cnpj: event.target.value,
               });
             }}
+            value={formClient.cnpj}
           />
+
+          <TextField
+            id="covenant_discount_amount"
+            label="Covenant discount amount"
+            style={
+              formClient.physical
+                ? { width: "100%", display: "none" }
+                : { width: "100%" }
+            }
+            InputLabelProps={{
+              shrink: true,
+            }}
+            type="number"
+            onChange={(event) => {
+              setFormClient({
+                ...formClient,
+                covenant_discount_amount: event.target.value,
+              });
+            }}
+            value={
+              formClient.covenant ? formClient.covenant.discount_amount : 0
+            }
+          />
+
           <Button
             type="submit"
             style={globalStyles.saveFormButton}
             onClick={async () =>
-              await ClientRegistrationController.handleSaveClient(formClient)
+              await ClientRegistrationController.handleSaveClient(
+                formClient,
+                setClients
+              )
             }
           >
             Save
           </Button>
-          <Button type="submit" style={globalStyles.cancelFormButton}>
+          <Button
+            type="button"
+            style={globalStyles.cancelFormButton}
+            onClick={() => {
+              setFormClient({ physical: true });
+            }}
+          >
             Cancel
           </Button>
         </form>
       </div>
-      <div style={{ width: "40%" }}></div>
+
+      <div style={styles.container}>
+        <div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          {clients.map((client) => {
+            return (
+              <div
+                style={{ width: "45%", border: "solid black", margin: "2%" }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-around",
+                    backgroundColor: "lightgray",
+                  }}
+                >
+                  <div style={{}}>
+                    {client.name}
+                    <IconButton>
+                      <CreateIcon
+                        onClick={async () => {
+                          await ClientRegistrationController.setClientToEdit(
+                            client,
+                            setFormClient
+                          );
+                        }}
+                      />
+                    </IconButton>
+                    <IconButton>
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </div>
+                </div>
+                <div>
+                  <ul>
+                    <li>{client.address}</li>
+                    <li>{client.cnpj ? client.cnpj : client.cpf}</li>
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

@@ -17,16 +17,21 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      latitude: {
+      cnpj: {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      latitude: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       longitude: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       covenantId: {
         type: Sequelize.INTEGER,
+        allowNull:true,
         references: {
           model: "Covenant",
           key: "id",
