@@ -14,11 +14,17 @@ function Login() {
       e.preventDefault();
       LoginController.handleAuth(currentUser, () => {
         routerHistory.push({
-          pathname: "/home",
+          pathname: "/map",
           state: { isAuthenticated: true },
         });
       });
     }
+  }
+  if (localStorage.getItem("authUser")) {
+    routerHistory.push({
+      pathname: "/map",
+      state: { isAuthenticated: true },
+    });
   }
 
   return (
@@ -68,13 +74,7 @@ function Login() {
               >
                 Sign in
               </Button>
-              <Button
-                type="submit"
-                onClick={() => validateForm()}
-                style={styles.buttonCreate}
-              >
-                Create account
-              </Button>
+              
             </div>
           </form>
         </div>

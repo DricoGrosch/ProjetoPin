@@ -1,13 +1,12 @@
 "use strict";
 
-import { Model, DataTypes } from "sequelize/types";
+const { Model, DataTypes } = require("sequelize");
 
 class Covenant extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: DataTypes.INTEGER,
-        discount_amaunt: DataTypes.DOUBLE,
+        discount_amount: DataTypes.DOUBLE,
       },
       { sequelize }
     );

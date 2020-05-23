@@ -4,7 +4,6 @@ class PhysicalPerson extends Model {
   static init(sequelize){
     super.init(
     {
-      id: DataTypes.INTEGER,
       name: DataTypes.STRING,
       address: DataTypes.STRING,
       latitude: DataTypes.STRING,

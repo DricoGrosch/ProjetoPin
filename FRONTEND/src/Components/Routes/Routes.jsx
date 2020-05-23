@@ -12,10 +12,25 @@ function Routes() {
             <Redirect to="/login" /> }
           </Route>
           <Route path={"/login"} exact component={() => <Login />} />
-          <Route
+          {/* <Route
             path={"/home"}
             exact
             component={(props) => <BaseLayout {...props} />}
+          /> */}
+          <Route
+            path={"/map"}
+            exact
+            component={(props) => (
+              <BaseLayout componentToRender={"Map"} {...props} />
+            )}
+          />
+          
+          <Route
+            path={"/registration/clients"}
+            exact
+            component={(props) => (
+              <BaseLayout componentToRender={"ClientRegistration"} {...props} />
+            )}
           />
         </Switch>
       </BrowserRouter>

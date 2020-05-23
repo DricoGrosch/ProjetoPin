@@ -4,7 +4,6 @@ const {Model,DataTypes} = require ('sequelize')
 class Deliverer extends Model{
   static init(sequelize){
     super.init({
-      id: DataTypes.INTEGER,
       name: DataTypes.STRING,
       address: DataTypes.STRING,
       latitude: DataTypes.STRING,

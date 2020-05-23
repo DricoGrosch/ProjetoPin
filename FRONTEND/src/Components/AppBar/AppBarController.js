@@ -5,6 +5,12 @@ async function loadAuthUserData(setAuthUserData) {
   setAuthUserData(currentUser);
 }
 
+
+async function handleLogout(navigateCallback){
+  await localStorage.removeItem('authUser')
+  navigateCallback()
+}
 export default {
   loadAuthUserData,
+  handleLogout,
 };
