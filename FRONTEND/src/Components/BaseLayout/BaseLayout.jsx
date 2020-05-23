@@ -14,7 +14,7 @@ function BaseLayout(props) {
         </>
       );
     } else {
-      
+      return <Login />;
     }
   } catch {
     return <Login />;
