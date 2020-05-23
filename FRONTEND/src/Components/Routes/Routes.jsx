@@ -17,6 +17,13 @@ function Routes() {
             exact
             component={(props) => <BaseLayout {...props} />}
           />
+          <Route
+            path={"/map"}
+            exact
+            component={(props) => (
+              <BaseLayout componentToRender={"Map"} {...props} />
+            )}
+          />
         </Switch>
       </BrowserRouter>
     </>

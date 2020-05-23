@@ -20,6 +20,12 @@ function Login() {
       });
     }
   }
+  if (localStorage.getItem("authUser")) {
+    routerHistory.push({
+      pathname: "/home",
+      state: { isAuthenticated: true },
+    });
+  }
 
   return (
     <>
