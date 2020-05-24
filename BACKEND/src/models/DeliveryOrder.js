@@ -24,10 +24,10 @@ class DeliveryOrder extends Model {
     };
   }
 
-  static associate({ Deliverer, GasBottle }) {
+  static associate({ Deliverer, GasBottle, DeliveryOrderGasBottle }) {
     DeliveryOrder.belongsTo(Deliverer, { foreignKey: "delivererId" });
     DeliveryOrder.belongsToMany(GasBottle, {
-      through: "DeliveryOrderGasBottle",
+      through: DeliveryOrderGasBottle,
       as: "bottles",
       foreignKey: "gasBottleId",
     });

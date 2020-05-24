@@ -9,9 +9,9 @@ class GasBottle extends Model{
     },{sequelize})
   }
   
-  static associate({ DeliveryOrder}) {
+  static associate({ DeliveryOrder,DeliveryOrderGasBottle}) {
    GasBottle.belongsToMany(DeliveryOrder, {
-      through: "DeliveryOrderGasBottle",
+      through: DeliveryOrderGasBottle,
       as: "deliveryOrders",
       foreignKey: "deliveryOrderId",
     });

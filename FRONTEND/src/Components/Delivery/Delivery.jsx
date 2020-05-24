@@ -116,12 +116,13 @@ function Delivery() {
   }, []);
 
   function validateForm(e) {
-    debugger
+    debugger;
+    e.preventDefault();
     if (!currentOrder.lat || !currentOrder.lng) {
-      e.preventDefault();
       toast.error("Success Notification !", {
         position: toast.POSITION.TOP_CENTER,
       });
+    } else {
       DeliveryController.createNewDeliveryOrder(currentOrder);
     }
   }

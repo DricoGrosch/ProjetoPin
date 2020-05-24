@@ -8,15 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      gasBottleId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "GasBottle",
-          key: "id",
-        },
-        allowNull: false,
-        onDelete:'CASCADE'
-      },
       deliveryOrderId: {
         type: Sequelize.INTEGER,
         references: {
@@ -24,7 +15,16 @@ module.exports = {
           key: "id",
         },
         allowNull: false,
-        onDelete:'CASCADE'
+        onDelete: "CASCADE",
+      },
+      gasBottleId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "GasBottle",
+          key: "id",
+        },
+        allowNull: false,
+        onDelete: "CASCADE",
       },
     });
   },
