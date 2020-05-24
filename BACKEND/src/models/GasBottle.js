@@ -3,11 +3,18 @@
 class GasBottle extends Model{
   static init(sequelize){
     super.init({
-      id: DataTypes.INTEGER,
       type: DataTypes.INTEGER,
       costPrice: DataTypes.DOUBLE,
       sellPrice: DataTypes.DOUBLE
     },{sequelize})
+  }
+  
+  static associate({ DeliveryOrder}) {
+   GasBottle.belongsToMany(DeliveryOrder, {
+      through: "DeliveryOrderGasBottle",
+      as: "deliveryOrders",
+      foreignKey: "deliveryOrderId",
+    });
   }
 }
 module.exports = GasBottle

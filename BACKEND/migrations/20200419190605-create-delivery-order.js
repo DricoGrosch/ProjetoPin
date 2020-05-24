@@ -15,6 +15,7 @@ module.exports = {
 
       delivererId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: "Deliverer",
           key: "id",
