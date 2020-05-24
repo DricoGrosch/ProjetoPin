@@ -6,6 +6,7 @@ const Covenant = require("../src/models/Covenant");
 const Deliverer = require("../src/models/Deliverer");
 const GasBottle = require("../src/models/GasBottle");
 const DeliveryOrder = require("../src/models/DeliveryOrder");
+const DeliveryOrderGasBottle = require("../src/models/DeliveryOrderGasBottle");
 
 const Sequelize = require("sequelize");
 const dbConfig = require("../config/database").development;
@@ -19,6 +20,7 @@ function initDatabase() {
   Deliverer.init(db);
   GasBottle.init(db);
   DeliveryOrder.init(db);
+  DeliveryOrderGasBottle.init(db);
   
   User.associate(db.models);
   GasBottle.associate(db.models);
