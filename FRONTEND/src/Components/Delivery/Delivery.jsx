@@ -1,7 +1,6 @@
 import React from "react";
 import config from "../../config";
 import Map from "../Map";
-import MapSearchBox from "../MapSearchBox";
 import { toast } from "react-toastify";
 
 import { useState } from "react";
@@ -116,9 +115,8 @@ function Delivery() {
   }, []);
 
   function validateForm(e) {
-    debugger;
-    e.preventDefault();
     if (!currentOrder.lat || !currentOrder.lng) {
+      e.preventDefault();
       toast.error("Success Notification !", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -220,12 +218,21 @@ function Delivery() {
                     }, 1000);
                   }),
 
-                onRowUpdate: (newData, oldData) => {
-                  debugger;
-                },
-                onRowDelete: (oldData) => {
-                  debugger;
-                },
+                onRowUpdate: (newData, oldData) => {},
+                onRowDelete: (oldData) =>
+                  new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                      const dataDelete = [...currentOrder.bottles];
+                      const index = oldData.tableData.id;
+                      dataDelete.splice(index, 1);
+                      setCurrentOrder({
+                        ...currentOrder,
+                        bottles: dataDelete,
+                      });
+
+                      resolve();
+                    }, 1000);
+                  }),
               }}
             />
 
@@ -238,7 +245,13 @@ function Delivery() {
             >
               Confirm new delivery order
             </Button>
-            <Button type="button" style={globalStyles.cancelFormButton}>
+            <Button
+              type="button"
+              style={globalStyles.cancelFormButton}
+              onClick={() => {
+                setCurrentOrder({ bottles: [] });
+              }}
+            >
               Cancel
             </Button>
           </form>
