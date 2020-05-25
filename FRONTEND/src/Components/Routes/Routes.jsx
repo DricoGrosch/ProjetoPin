@@ -32,6 +32,14 @@ function Routes() {
               <BaseLayout componentToRender={"ClientRegistration"} {...props} />
             )}
           />
+
+          <Route
+            path={"/registration/gasbottle"}
+            exact
+            component={(props) => (
+              <BaseLayout componentToRender={"GasBotlleRegistration"} {...props} />
+            )}
+          />  
         </Switch>
       </BrowserRouter>
     </>

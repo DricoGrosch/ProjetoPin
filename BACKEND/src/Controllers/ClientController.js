@@ -3,6 +3,7 @@ const JuridicalPerson = require("../models/JuridicalPerson");
 const Covenant = require("../models/Covenant");
 async function saveClient(req, res) {
   const data = req.body;
+  
   const client = { address: data.address, name: data.name };
   if (data.juridical) {
     client.cnpj = data.cnpj;

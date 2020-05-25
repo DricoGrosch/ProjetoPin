@@ -190,21 +190,43 @@ function ClientRegistration() {
           {clients.map((client) => {
             return (
               <div
-                style={{ width: "45%", border: "solid black", margin: "2%" }}
+                style={{ 
+                  width: "45%",
+                  border: "solid #ece9e9",
+                  margin: "2%",
+                  backgroundColor: "whitesmoke",
+                  borderRadius: "20px 20px",
+              }}
               >
                 <div
                   style={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "space-around",
-                    backgroundColor: "lightgray",
+                    backgroundColor: "#3f51b5",
+                    borderRadius: "10px 10px 0px 0px",
+                    
                   }}
-                >
-                  <div style={{}}>
-                    {client.name}
-                    <IconButton>
+                > 
+                  <div style={{
+                    marginLeft: "5%",
+                    display: "flex",
+                    alignItems: "center",
+                    color:"whitesmoke"
+                    
+                  }}
+                  > 
+                  {client.name} </div>
+                 
+                  <div style={{
+                    textAlign: "end",
+                    width:"100%"
+                  }}>
+                    
+                    <IconButton style={{color:"whitesmoke"}}>
                       <CreateIcon
                         onClick={async () => {
+                          
                           await ClientRegistrationController.setClientToEdit(
                             client,
                             setFormClient
@@ -212,7 +234,7 @@ function ClientRegistration() {
                         }}
                       />
                     </IconButton>
-                    <IconButton>
+                    <IconButton style={{color:"whitesmoke"}}>
                       <DeleteForeverIcon />
                     </IconButton>
                   </div>
