@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   GoogleMap,
   withScriptjs,
@@ -9,9 +9,17 @@ import {
 
 import MapSearchBox from "../MapSearchBox";
 import { useState } from "react";
+import MapController from "./MapController";
 function Map(props) {
   const [markerPosition, setMarkerPosition] = useState({});
+  const [deliveryOrders, setDeliveryOrders] = useState([]);
 
+  useEffect(() => {
+    async function loadData() {
+      await MapController.loadDeliveryOrders(setDeliveryOrders);
+    }
+    loadData();
+  }, []);
   return (
     <>
       <GoogleMap
@@ -28,17 +36,22 @@ function Map(props) {
         <Marker
           name={"Dolores park"}
           draggable={true}
-          // onDragEnd={ this.onMarkerDragEnd }
           position={markerPosition}
         />
         <Marker />
-        <InfoWindow position={{ lat: -27.0591, lng: -49.5313 }}>
-          <div>
-            <span style={{ padding: 0, margin: 0 }}>
-              aqui vai a info dos pedidos
-            </span>
-          </div>
-        </InfoWindow>
+        {deliveryOrders.map((order) => {
+          return (
+            <InfoWindow
+              position={{ lat: parseFloat(order.latitude), lng: parseFloat(order.longitude) }}
+            >
+              <div>
+                <span style={{ padding: 0, margin: 0 }}>
+                  {`Order number ${order.id}`}
+                </span>
+              </div>
+            </InfoWindow>
+          );
+        })}
       </GoogleMap>
     </>
   );

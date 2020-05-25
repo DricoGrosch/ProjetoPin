@@ -16,6 +16,7 @@ routes.get('/get/clients',ClientController.getClients)
 routes.get('/get/deliverers',DelivererController.getDeliverers)
 routes.get('/get/bottles',BottleController.getBottles)
 routes.post('/post/deliveryOrder',DeliveryOrderController.createNewDeliveryOrder)
+routes.get('/get/deliveryOrders',DeliveryOrderController.loadDeliveryOrders)
 
 module.exports = routes
 

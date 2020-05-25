@@ -115,8 +115,8 @@ function Delivery() {
   }, []);
 
   function validateForm(e) {
-    e.preventDefault();
     if (!currentOrder.lat || !currentOrder.lng) {
+      e.preventDefault();
       toast.error("Success Notification !", {
         position: toast.POSITION.TOP_CENTER,
       });
