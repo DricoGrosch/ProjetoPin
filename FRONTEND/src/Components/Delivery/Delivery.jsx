@@ -115,7 +115,13 @@ function Delivery() {
   }, []);
 
   function validateForm(e) {
-    if (!currentOrder.lat || !currentOrder.lng) {
+    debugger
+    if (
+      !currentOrder.lat ||
+      !currentOrder.lng ||
+      !currentOrder.deliverer ||
+      !currentOrder.client
+    ) {
       e.preventDefault();
       toast.error("Success Notification !", {
         position: toast.POSITION.TOP_CENTER,
@@ -239,6 +245,7 @@ function Delivery() {
             <Button
               type="submit"
               style={globalStyles.saveFormButton}
+              disabled={currentOrder.bottles.length === 0}
               onClick={(e) => {
                 validateForm(e);
               }}

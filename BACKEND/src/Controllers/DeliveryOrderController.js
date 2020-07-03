@@ -15,8 +15,6 @@ async function createNewDeliveryOrder(req, res) {
   const deliveryOrder = await DeliveryOrder.create(obj);
   bottlesToAdd.map(async (bottle) => {
     const db_bottle = await GasBottle.findByPk(bottle.id);
-
-
     await deliveryOrder.addBottle(db_bottle, {
       through: { amount: parseInt(bottle.amount) },
     });

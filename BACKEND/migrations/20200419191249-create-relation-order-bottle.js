@@ -8,16 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-
-      deliveryOrderId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "DeliveryOrder",
-          key: "id",
-        },
-        allowNull: false,
-        onDelete: "CASCADE",
-      },
       gasBottleId: {
         type: Sequelize.INTEGER,
         references: {
@@ -27,6 +17,19 @@ module.exports = {
         allowNull: false,
         onDelete: "CASCADE",
       },
+      deliveryOrderId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "DeliveryOrder",
+          key: "id",
+        },
+        allowNull: false,
+        onDelete: "CASCADE",
+      },
+      amount:{
+          type: Sequelize.DOUBLE,
+          allowNull: false,
+        },
     });
   },
   down: (queryInterface, Sequelize) => {
