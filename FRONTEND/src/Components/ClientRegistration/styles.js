@@ -18,5 +18,7 @@ const styles = {
     borderRadius: "2%",
     overflowY:'auto'
   },
+  
+
 };
 export default styles;

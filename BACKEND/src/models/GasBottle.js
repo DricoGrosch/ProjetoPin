@@ -13,7 +13,7 @@ class GasBottle extends Model{
    GasBottle.belongsToMany(DeliveryOrder, {
       through: DeliveryOrderGasBottle,
       as: "deliveryOrders",
-      foreignKey: "deliveryOrderId",
+      foreignKey: "gasBottleId",
     });
   }
 }

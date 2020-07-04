@@ -123,7 +123,14 @@ function CustomDrawer() {
                 </ListItemIcon>
                 <ListItemText primary={"CLIENTS"} />
               </ListItem>
-              <ListItem button>
+              <ListItem button
+                button
+                onClick={() => {
+                  routerHistory.push({
+                    pathname: "/registration/gasbottle",
+                    state: { isAuthenticated: true },
+                  });
+                }}>
                 <ListItemIcon>
                   <TramIcon />
                 </ListItemIcon>

@@ -1,4 +1,24 @@
 const GasBottle = require("../models/GasBottle");
+
+
+
+
+
+async function saveBottles(req, res) {
+
+ const gasBottleExits = await GasBottle.findOne({ where: { type: req.body.type } });
+ console.log(req.body.type)
+  if (gasBottleExits) {
+    console.log('teste')
+    return res.status(400).json({ error: 'This type of bottle alredy exists' });
+  }else{
+    await GasBottle.create(req.body)
+  }
+  
+ 
+ 
+}
+
 async function getBottles(req, res) {
   try {
     const response = [];
@@ -15,4 +35,5 @@ async function getBottles(req, res) {
 
 module.exports = {
     getBottles,
+    saveBottles,
 };
