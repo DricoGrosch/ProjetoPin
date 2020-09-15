@@ -68,14 +68,7 @@ function CustomDrawer() {
             <ListItemIcon style={styles.ListItemIcon}>
               <ShoppingCartIcon />
             </ListItemIcon>
-            <ListItemText primary={"ORDERS"} />
-          </ListItem>
-
-          <ListItem button>
-            <ListItemIcon>
-              <DonutSmallIcon />
-            </ListItemIcon>
-            <ListItemText primary={"OTHERS"} />
+            <ListItemText primary={"SALES HISTORY"} />
           </ListItem>
 
           <ListItem

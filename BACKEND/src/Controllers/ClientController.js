@@ -1,18 +1,23 @@
 const PhysicalPerson = require("../models/PhysicalPerson");
 const JuridicalPerson = require("../models/JuridicalPerson");
+const Person = require("../models/Person");
 const Covenant = require("../models/Covenant");
 async function saveClient(req, res) {
   const data = req.body;
-  
+
   const client = { address: data.address, name: data.name };
   if (data.juridical) {
     client.cnpj = data.cnpj;
     if (data.id) {
+      let db_person = await Person.findByPk(data.id);
       let db_client = await JuridicalPerson.findByPk(data.id);
       let db_covenant = await Covenant.findByPk(db_client.covenantId);
       db_covenant.update({ discount_amount: data.discount_amount });
       db_client.update(client);
+      db_person.update(client);
     } else {
+      const person = await Person.create(client);
+      client.id = person.dataValues.id;
       const covenant = await Covenant.create({
         discount_amount: parseFloat(data.covenant_discount_amount),
       });
@@ -22,9 +27,13 @@ async function saveClient(req, res) {
   } else {
     client.cpf = data.cpf;
     if (data.id) {
+      let db_person = await Person.findByPk(data.id);
       let db_client = await PhysicalPerson.findByPk(data.id);
+      db_person.update(client);
       db_client.update(client);
     } else {
+      const person = await Person.create(client);
+      client.id = person.dataValues.id;
       PhysicalPerson.create(client);
     }
   }

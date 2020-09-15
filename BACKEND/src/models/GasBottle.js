@@ -3,7 +3,7 @@
 class GasBottle extends Model{
   static init(sequelize){
     super.init({
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       costPrice: DataTypes.DOUBLE,
       sellPrice: DataTypes.DOUBLE
     },{sequelize})

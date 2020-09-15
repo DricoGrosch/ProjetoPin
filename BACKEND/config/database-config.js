@@ -22,7 +22,6 @@ function initDatabase() {
   DeliveryOrder.init(db);
   DeliveryOrderGasBottle.init(db);
   
-  User.associate(db.models);
   GasBottle.associate(db.models);
   DeliveryOrder.associate(db.models);
 }

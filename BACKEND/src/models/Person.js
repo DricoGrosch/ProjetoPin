@@ -12,7 +12,5 @@ class Person extends Model {
       { sequelize }
     );
   }
-
-
 }
 module.exports = Person;

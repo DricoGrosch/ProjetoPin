@@ -12,8 +12,6 @@ import {
 import styles from "./styles";
 import globalStyles from "../styles";
 import ClientRegistrationController from "./ClientRegistrationController";
-import Map from "../Map";
-import config from "../../config";
 import CreateIcon from "@material-ui/icons/Create";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 function ClientRegistration() {

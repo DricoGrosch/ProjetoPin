@@ -10,6 +10,7 @@ import {
   MenuItem,
   Select,
   InputLabel,
+  Collapse,
 } from "@material-ui/core";
 import globalStyles from "../styles";
 import { useEffect } from "react";
@@ -35,6 +36,8 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import Bottle from "../../Models/Bottle";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -74,7 +77,7 @@ function Delivery() {
           onChange={(e) => props.onChange(e.target.value)}
         >
           {gasBottles.map((bottle) => (
-            <MenuItem value={bottle}>{bottle.type}</MenuItem>
+            <MenuItem key={bottle} value={bottle}>{bottle.type}</MenuItem>
           ))}
         </Select>
       ),
@@ -100,6 +103,7 @@ function Delivery() {
   const [clients, setClients] = useState([]);
   const [deliverers, setDeliverers] = useState([]);
   const [gasBottles, setGasBottles] = useState([]);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [currentOrder, setCurrentOrder] = useState({ bottles: [] });
 
   useEffect(() => {
@@ -113,15 +117,20 @@ function Delivery() {
     }
     getData();
   }, []);
-
-  function validateForm(e) {
-    debugger
+  const formIsValid = () => {
     if (
       !currentOrder.lat ||
       !currentOrder.lng ||
       !currentOrder.deliverer ||
-      !currentOrder.client
+      !currentOrder.client ||
+      currentOrder.bottles.length === 0
     ) {
+      return false;
+    }
+    return true;
+  };
+  function validateForm(e) {
+    if (formIsValid) {
       e.preventDefault();
       toast.error("Success Notification !", {
         position: toast.POSITION.TOP_CENTER,
@@ -133,7 +142,7 @@ function Delivery() {
   return (
     <>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        <div style={{ width: "100%", margin: "1% 1% 5% 1%" }}>
+        <div style={{ width: "100%", margin: "1% 1% 3% 1%" }}>
           <Map
             currentOrder={currentOrder}
             setCurrentOrder={setCurrentOrder}
@@ -143,126 +152,161 @@ function Delivery() {
             mapElement={<div style={{ height: `100%` }} />}
           />
         </div>
-        <div
+        <span
+          type="button"
+          onClick={() => {
+            setIsCollapsed(!isCollapsed);
+          }}
           style={{
             width: "100%",
             margin: "1%",
+            padding: "1%",
+            fontSize: "20px",
+            textAlign: "center",
+            cursor: "pointer",
+            backgroundColor: "whitesmoke",
+          }}
+        >
+          Add new orders{" "}
+          {isCollapsed ? (
+            <ArrowUpwardIcon style={{ verticalAlign: "bottom" }} />
+          ) : (
+            <ArrowDownwardIcon style={{ verticalAlign: "bottom" }} />
+          )}
+        </span>
+        <Collapse
+          in={isCollapsed}
+          style={{
+            width: "100%",
+            margin: "0 1%",
             padding: "1%",
             border: "solid whitesmoke",
             backgroundColor: "#f2f2f2",
           }}
         >
-          <form>
-            <InputLabel id="client">Client</InputLabel>
-            <Select
-              labelId="client"
-              id="client"
-              autoComplete={false}
-              onChange={(e) => {
-                setCurrentOrder({ ...currentOrder, client: e.target.value });
-              }}
-              style={{ width: "100%" }}
-            >
-              <MenuItem selected={true} value={""}>
-                ---------------
-              </MenuItem>
-              {clients.map((client) => (
-                <MenuItem value={client.id}>{client.name}</MenuItem>
-              ))}
-            </Select>
+          <div>
+            <form>
+              <InputLabel id="client">Client</InputLabel>
+              <Select
+                labelId="client"
+                id="client"
+                autoComplete={false}
+                onChange={(e) => {
+                  setCurrentOrder({ ...currentOrder, client: e.target.value });
+                }}
+                style={{ width: "100%" }}
+              >
+                <MenuItem selected={true} value={""}>
+                  ---------------
+                </MenuItem>
+                {clients.map((client) => (
+                  <MenuItem key={client.id} value={client.id}>{client.name}</MenuItem>
+                ))}
+              </Select>
 
-            <InputLabel id="deliverer">Deliverer</InputLabel>
-            <Select
-              labelId="deliverer"
-              id="deliverer"
-              autoComplete={false}
-              onChange={(e) => {
-                setCurrentOrder({ ...currentOrder, deliverer: e.target.value });
-              }}
-              style={{ width: "100%" }}
-            >
-              <MenuItem selected={true} value={""}>
-                ---------------
-              </MenuItem>
-              {deliverers.map((deliverer) => (
-                <MenuItem value={deliverer.id}>{deliverer.name}</MenuItem>
-              ))}
-            </Select>
+              <InputLabel id="deliverer">Deliverer</InputLabel>
+              <Select
+                labelId="deliverer"
+                id="deliverer"
+                autoComplete={false}
+                onChange={(e) => {
+                  setCurrentOrder({
+                    ...currentOrder,
+                    deliverer: e.target.value,
+                  });
+                }}
+                style={{ width: "100%" }}
+              >
+                <MenuItem selected={true} value={""}>
+                  ---------------
+                </MenuItem>
+                {deliverers.map((deliverer) => (
+                  <MenuItem key={deliverer.id} value={deliverer.id}>{deliverer.name}</MenuItem>
+                ))}
+              </Select>
 
-            <MaterialTable
-              style={{ margin: "1%" }}
-              title="Gas Bottles"
-              icons={tableIcons}
-              columns={tableColumns}
-              options={{
-                search: false,
-                paging: false,
-                sorting: false,
-                headerStyle: {
-                  // textAlign:'center',
-                  paddingLeft: "1%",
-                },
-              }}
-              data={currentOrder.bottles}
-              editable={{
-                onRowAdd: (newData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      setCurrentOrder({
-                        ...currentOrder,
-                        bottles: [
-                          ...currentOrder.bottles,
-                          {
-                            bottleId: newData.selectedBottle.id,
-                            bottleType: newData.selectedBottle.type,
-                            amount: newData.amount,
-                          },
-                        ],
-                      });
+              <MaterialTable
+                style={{ margin: "1%" }}
+                title="Gas Bottles"
+                icons={tableIcons}
+                columns={tableColumns}
+                options={{
+                  search: false,
+                  paging: false,
+                  sorting: false,
+                  headerStyle: {
+                    // textAlign:'center',
+                    paddingLeft: "1%",
+                  },
+                }}
+                data={currentOrder.bottles}
+                editable={{
+                  onRowAdd: (newData) =>
+                    new Promise((resolve, reject) => {
+                      setTimeout(() => {
+                        debugger;
+                        setCurrentOrder({
+                          ...currentOrder,
+                          bottles: [
+                            ...currentOrder.bottles,
+                            {
+                              bottleId: newData.selectedBottle.id,
+                              bottleType: newData.selectedBottle.type,
+                              sellPrice: newData.selectedBottle.sellPrice,
+                              amount: newData.amount,
+                            },
+                          ],
+                        });
 
-                      resolve();
-                    }, 1000);
-                  }),
+                        resolve();
+                      }, 1000);
+                    }),
 
-                onRowUpdate: (newData, oldData) => {},
-                onRowDelete: (oldData) =>
-                  new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                      const dataDelete = [...currentOrder.bottles];
-                      const index = oldData.tableData.id;
-                      dataDelete.splice(index, 1);
-                      setCurrentOrder({
-                        ...currentOrder,
-                        bottles: dataDelete,
-                      });
+                  onRowUpdate: (newData, oldData) => {},
+                  onRowDelete: (oldData) =>
+                    new Promise((resolve, reject) => {
+                      setTimeout(() => {
+                        const dataDelete = [...currentOrder.bottles];
+                        const index = oldData.tableData.id;
+                        dataDelete.splice(index, 1);
+                        setCurrentOrder({
+                          ...currentOrder,
+                          bottles: dataDelete,
+                        });
 
-                      resolve();
-                    }, 1000);
-                  }),
-              }}
-            />
+                        resolve();
+                      }, 1000);
+                    }),
+                }}
+              />
 
-            <Button
-              type="submit"
-              style={globalStyles.saveFormButton}
-              disabled={currentOrder.bottles.length === 0}
-              onClick={(e) => {
-                validateForm(e);
-              }}
-            >
-              Confirm new delivery order
-            </Button>
-            <Button
-              type="button"
-              style={globalStyles.cancelFormButton}
-              onClick={() => {
-                setCurrentOrder({ bottles: [] });
-              }}
-            >
-              Cancel
-            </Button>
-          </form>
-        </div>
+              <Button
+                type="submit"
+                // n quer funcionar nem a pau
+                style={
+                  formIsValid
+                    ? globalStyles.saveFormButton
+                    : { ...globalStyles.saveFormButton, opacity: "50%" }
+                }
+                disabled={formIsValid}
+                onClick={(e) => {
+                  validateForm(e);
+                }}
+              >
+                Confirm new delivery order
+              </Button>
+              <Button
+                type="button"
+                style={globalStyles.cancelFormButton}
+                onClick={() => {
+                  setCurrentOrder({ bottles: [] });
+                }}
+              >
+                Cancel
+              </Button>
+            </form>
+          </div>
+        </Collapse>
       </div>
     </>
   );

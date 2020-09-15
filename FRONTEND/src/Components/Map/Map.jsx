@@ -6,13 +6,24 @@ import {
   Marker,
   InfoWindow,
 } from "react-google-maps";
-
+import Button from "@material-ui/core";
 import MapSearchBox from "../MapSearchBox";
 import { useState } from "react";
 import MapController from "./MapController";
+import ConfirmMessage from "../ConfirmMessage/ConfirmMessage";
+
+
+
 function Map(props) {
   const [markerPosition, setMarkerPosition] = useState({});
   const [deliveryOrders, setDeliveryOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState({});
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+
+  function successCallback() {
+    MapController.endOrder(selectedOrder.id, deliveryOrders, setDeliveryOrders);
+  }
+
 
   useEffect(() => {
     async function loadData() {
@@ -20,6 +31,7 @@ function Map(props) {
     }
     loadData();
   }, []);
+
   return (
     <>
       <GoogleMap
@@ -42,17 +54,81 @@ function Map(props) {
         {deliveryOrders.map((order) => {
           return (
             <InfoWindow
-              position={{ lat: parseFloat(order.latitude), lng: parseFloat(order.longitude) }}
+              position={{
+                lat: parseFloat(order.latitude),
+                lng: parseFloat(order.longitude),
+              }}
             >
-              <div>
-                <span style={{ padding: 0, margin: 0 }}>
-                  {`Order number ${order.id}`}
-                </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                }}
+              >
+                <div style={{ width: "100%" }}>
+                  <li>
+                    Order number <b>{order.id}</b>
+                  </li>
+                  <li>
+                    Client: <b>{order.client}</b>
+                  </li>
+                  <li>
+                    Deliverer: <b>{order.deliverer}</b>
+                  </li>
+                  <hr />
+                  {order.bottles.map((bottle) => {
+                    return (
+                      <li>
+                        <b>
+                          {bottle.type}: {bottle.amount} UNIDADES
+                        </b>
+                      </li>
+                    );
+                  })}
+                </div>
+                <div style={{ width: "100%" }}>
+                  <button
+                    onClick={() => {
+                      setSelectedOrder(order);
+                      setShowConfirmMessage(true);
+                    }}
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#005ca5",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "10px",
+                      marginTop: "2%",
+                    }}
+                  >
+                    FINISH
+                  </button>
+                  <button
+                    style={{
+                      width: "100%",
+                      backgroundColor: "red",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "10px",
+                      marginTop: "2%",
+                    }}
+                  >
+                    CANCEL
+                  </button>
+                </div>
               </div>
             </InfoWindow>
           );
         })}
       </GoogleMap>
+
+      <ConfirmMessage
+        open={showConfirmMessage}
+        setOpen={setShowConfirmMessage}
+        successCallback={successCallback}
+        title="Do you really want to finish this delivery order"
+      />
     </>
   );
 }

@@ -8,17 +8,9 @@ class User extends Model {
         username: DataTypes.STRING,
         password: DataTypes.STRING,
         status: DataTypes.STRING,
-        personId: { 
-          type: DataTypes.INTEGER, 
-          references: {
-             model: "Person",key:'id' } },
       },
       { sequelize }
     );
-  }
-  static associate({ Person }) {
-    this.hasOne(Person);
-   
   }
 }
 module.exports = User;

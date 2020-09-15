@@ -5,8 +5,12 @@ module.exports = {
     return queryInterface.createTable("JuridicalPerson", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        autoIncrement: false,
         primaryKey: true,
+        references: {
+          model: "Person",
+          key: "id",
+        },
         type: Sequelize.INTEGER,
       },
       address: {
@@ -31,7 +35,7 @@ module.exports = {
       },
       covenantId: {
         type: Sequelize.INTEGER,
-        allowNull:true,
+        allowNull: true,
         references: {
           model: "Covenant",
           key: "id",

@@ -1,13 +1,17 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('PhysicalPerson', {
+    return queryInterface.createTable("PhysicalPerson", {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        autoIncrement: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        references: {
+          model: "Person",
+          key: "id",
+        },
+        type: Sequelize.INTEGER,
       },
       address: {
         allowNull: false,
@@ -15,32 +19,32 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       latitude: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       longitude: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       cpf: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
-},  
+  },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('PhysicalPerson');
-  }
+    return queryInterface.dropTable("PhysicalPerson");
+  },
 };

@@ -13,6 +13,15 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
 
+      clientId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Person",
+          key: "id",
+        },
+      },
+
       delivererId: {
         type: Sequelize.INTEGER,
         allowNull: false,
