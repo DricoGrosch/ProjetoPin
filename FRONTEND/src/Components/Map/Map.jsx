@@ -12,18 +12,30 @@ import { useState } from "react";
 import MapController from "./MapController";
 import ConfirmMessage from "../ConfirmMessage/ConfirmMessage";
 
-
-
 function Map(props) {
   const [markerPosition, setMarkerPosition] = useState({});
   const [deliveryOrders, setDeliveryOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+  const [endOrder, setEndOrder] = useState(false);
+  const [cancelOrder, setCancelOrder] = useState(false);
+  const [title, setTitle] = useState(false);
 
   function successCallback() {
-    MapController.endOrder(selectedOrder.id, deliveryOrders, setDeliveryOrders);
+    if (endOrder && !cancelOrder) {
+      MapController.endOrder(
+        selectedOrder.id,
+        deliveryOrders,
+        setDeliveryOrders
+      );
+    } else {
+      MapController.cancelOrder(
+        selectedOrder.id,
+        deliveryOrders,
+        setDeliveryOrders
+      );
+    }
   }
-
 
   useEffect(() => {
     async function loadData() {
@@ -92,6 +104,11 @@ function Map(props) {
                     onClick={() => {
                       setSelectedOrder(order);
                       setShowConfirmMessage(true);
+                      setEndOrder(true);
+                      setCancelOrder(false);
+                      setTitle(
+                        "Do you really want to finish this delivery order"
+                      );
                     }}
                     style={{
                       width: "100%",
@@ -113,6 +130,15 @@ function Map(props) {
                       borderRadius: "10px",
                       marginTop: "2%",
                     }}
+                    onClick={() => {
+                      setSelectedOrder(order);
+                      setShowConfirmMessage(true);
+                      setEndOrder(false);
+                      setCancelOrder(true);
+                      setTitle(
+                        "Do you really want to cancel this delivery order"
+                      );
+                    }}
                   >
                     CANCEL
                   </button>
@@ -127,7 +153,7 @@ function Map(props) {
         open={showConfirmMessage}
         setOpen={setShowConfirmMessage}
         successCallback={successCallback}
-        title="Do you really want to finish this delivery order"
+        title={title}
       />
     </>
   );

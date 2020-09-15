@@ -77,7 +77,9 @@ function Delivery() {
           onChange={(e) => props.onChange(e.target.value)}
         >
           {gasBottles.map((bottle) => (
-            <MenuItem key={bottle} value={bottle}>{bottle.type}</MenuItem>
+            <MenuItem key={bottle} value={bottle}>
+              {bottle.type}
+            </MenuItem>
           ))}
         </Select>
       ),
@@ -131,12 +133,9 @@ function Delivery() {
   };
   function validateForm(e) {
     if (formIsValid) {
-      e.preventDefault();
-      toast.error("Success Notification !", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    } else {
       DeliveryController.createNewDeliveryOrder(currentOrder);
+    } else {
+      e.preventDefault();
     }
   }
   return (
@@ -200,7 +199,9 @@ function Delivery() {
                   ---------------
                 </MenuItem>
                 {clients.map((client) => (
-                  <MenuItem key={client.id} value={client.id}>{client.name}</MenuItem>
+                  <MenuItem key={client.id} value={client.id}>
+                    {client.name}
+                  </MenuItem>
                 ))}
               </Select>
 
@@ -221,7 +222,9 @@ function Delivery() {
                   ---------------
                 </MenuItem>
                 {deliverers.map((deliverer) => (
-                  <MenuItem key={deliverer.id} value={deliverer.id}>{deliverer.name}</MenuItem>
+                  <MenuItem key={deliverer.id} value={deliverer.id}>
+                    {deliverer.name}
+                  </MenuItem>
                 ))}
               </Select>
 
@@ -244,7 +247,6 @@ function Delivery() {
                   onRowAdd: (newData) =>
                     new Promise((resolve, reject) => {
                       setTimeout(() => {
-                        debugger;
                         setCurrentOrder({
                           ...currentOrder,
                           bottles: [
@@ -283,12 +285,7 @@ function Delivery() {
               <Button
                 type="submit"
                 // n quer funcionar nem a pau
-                style={
-                  formIsValid
-                    ? globalStyles.saveFormButton
-                    : { ...globalStyles.saveFormButton, opacity: "50%" }
-                }
-                disabled={formIsValid}
+                style={globalStyles.saveFormButton}
                 onClick={(e) => {
                   validateForm(e);
                 }}

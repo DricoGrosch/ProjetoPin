@@ -8,7 +8,7 @@ async function createNewDeliveryOrder(req, res) {
   const obj = {
     status: DeliveryOrder.status.REQUESTED,
     delivererId: data.deliverer,
-    clientId: data.client,
+    clientId: data.client,  
     latitude: data.lat,
     longitude: data.lng,
     total: 0,
@@ -43,16 +43,11 @@ async function loadDeliveryOrders(req, res) {
           model: GasBottle,
           as: "bottles",
         },
-        // {
-        //   model: Deliverer,
-        //   attributes: ["name"],
-        // },
       ],
     });
 
     unclosedOrders.map((order) => {
       order.dataValues.client = order.Person.dataValues.name;
-
       order.dataValues.bottles = order.bottles.map(({ dataValues }) => {
         return {
           type: dataValues.type,

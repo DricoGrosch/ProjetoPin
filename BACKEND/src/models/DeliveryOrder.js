@@ -35,8 +35,8 @@ class DeliveryOrder extends Model {
   }
 
   static associate({ Deliverer, GasBottle, DeliveryOrderGasBottle }) {
-    DeliveryOrder.hasOne(Deliverer, { foreignKey: "id" });
-    DeliveryOrder.hasOne(Person, { foreignKey: "id" });
+    DeliveryOrder.belongsTo(Deliverer, { foreignKey: "delivererId" });
+    DeliveryOrder.belongsTo(Person, { foreignKey: "clientId" });
     DeliveryOrder.belongsToMany(GasBottle, {
       through: DeliveryOrderGasBottle,
       as: "bottles", //esse alias é desnecessário
