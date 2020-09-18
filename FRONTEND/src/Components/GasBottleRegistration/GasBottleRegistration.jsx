@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import GasBottleRegistrationController from "./GasBottleRegistrationController";
@@ -20,14 +20,21 @@ function GasBotlleRegistration() {
   const [formBottle, setFormBottle] = useState({});
   const [bottles, setBottles] = useState([]);
 
+  useEffect(() => {
+    GasBottleRegistrationController.loadBottles(setBottles);
+  }, []);
   
   return (
   
-      <div>
+      <div
+      style={{
+            
+        display:"flex",
+      }}>
         <form action="">
           <div
             style={{
-              width: "40%",
+            
               border: "solid #ece9e9",
               padding: "1%",
               margin: "1%",
@@ -87,8 +94,9 @@ function GasBotlleRegistration() {
               }}
               onClick={async () =>
                 await GasBottleRegistrationController.handleSaveBottle(
-                  formBottle,
-                  setBottles
+                 formBottle,
+                  setBottles,
+                  bottles,
                 )
               }
             >
@@ -179,6 +187,65 @@ function GasBotlleRegistration() {
               })}
             </div>
         </div> */}
+        
+        <div style={styles.container}>
+        <div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          {bottles.map((bottle) => {
+            return (
+              <div
+                style={{ 
+                  width: "45%",
+                  border: "solid #ece9e9",
+                  margin: "2%",
+                  backgroundColor: "whitesmoke",
+                  borderRadius: "20px 20px",
+              }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-around",
+                    backgroundColor: "#3f51b5",
+                    borderRadius: "10px 10px 0px 0px",
+                    
+                  }}
+                > 
+                  <div style={{
+                    marginLeft: "5%",
+                    display: "flex",
+                    alignItems: "center",
+                    color:"whitesmoke"
+                    
+                  }}
+                  > 
+                  {bottle.type} </div>
+                 
+                  <div style={{
+                    textAlign: "end",
+                    width:"100%"
+                  }}>
+                    
+                    <IconButton style={{color:"whitesmoke"}}>
+                      <CreateIcon
+                      />
+                    </IconButton>
+                    <IconButton style={{color:"whitesmoke"}}>
+                      <DeleteForeverIcon />
+                    </IconButton>
+                  </div>
+                </div>
+                <div>
+                  <ul>
+                    <li>{bottle.costPrice}</li>
+                    <li>{bottle.sellPrice}</li>
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       </div>
   );
 }

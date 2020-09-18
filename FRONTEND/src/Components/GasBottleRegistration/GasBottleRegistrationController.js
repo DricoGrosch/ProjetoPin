@@ -1,8 +1,9 @@
 import config from "../../config";
 import Bottle from "../../Models/Bottle";
 
-async function handleSaveBottle(bottle, setBottles) {
+async function handleSaveBottle(bottle, setBottles,bottles) {
   const init = config.request_init;
+  setBottles([...bottles,bottle])
   init.body = JSON.stringify(bottle);
   await fetch("/post/bottles", init);
 }
